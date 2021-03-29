@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Note</string>
+    <string name="my_notes">My Note</string>
+    <string name="note_bottom">Ghi Chú</string>
+    <string name="reminder_bottom">Lời Nhắc</string>
+    <string name="search_notes">Tìm kiếm ghi chép</string>
+    <string name="addnote">Thêm</string>
+    <string name="title">Tiêu đề</string>
+    <string name="content">Nội dung</string>
+    <string name="Subtitle">Chú thích</string>
+    <string name="Tools">Công cụ</string>
+    <string name="SelectColor">Chọn màu</string>
+    <string name="search_reminder">Tìm kiếm lời nhắc</string>
+    <string name="contentR">Chú thích</string>
+    <string name="add_image">Thêm Ảnh</string>
+    <string name="add_URL">Thêm đường dẫn URL</string>
+    <string name="deleteNote">Xóa</string>
+    <string name="enter_url">Nhập đường dẫn URL</string>
+    <string name="add">Thêm</string>
+    <string name="cancel">Thôi</string>
+    <string name="my_reminder">My Reminder</string>
+    <string name="delete_Note">Xóa ghi chép</string>
+    <string name="isdelete">Bạn có chắn chắn muốn xóa nó chứ ?</string>
+    <string name="delete">Xóa</string>
+</resources>
