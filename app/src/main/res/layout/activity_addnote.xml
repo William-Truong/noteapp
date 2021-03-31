@@ -27,7 +27,7 @@
                 android:layout_marginLeft="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_back"
+                android:src="@drawable/icbackk"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/colorIcon" />

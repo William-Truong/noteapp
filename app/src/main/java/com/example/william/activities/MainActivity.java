@@ -53,9 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
         setupViewPager();
-
-
     }
 
     private void setupViewPager() {
