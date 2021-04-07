@@ -7,17 +7,15 @@ public class Reminders implements Serializable {
     private String description;
     private String date;
     private String time;
-    private int active;
 
     public Reminders() {
     }
 
-    public Reminders(String title, String description, String date, String time, int active) {
+    public Reminders(String title, String description, String date, String time) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.time = time;
-        this.active = active;
     }
 
     public String getTitle() {
@@ -52,11 +50,4 @@ public class Reminders implements Serializable {
         this.time = time;
     }
 
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
 }

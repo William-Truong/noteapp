@@ -22,4 +22,6 @@
     <string name="delete_Note">Delete Note</string>
     <string name="isdelete">Are you sure you want to delete this note ?</string>
     <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="enter_here">Enter here....</string>
 </resources>

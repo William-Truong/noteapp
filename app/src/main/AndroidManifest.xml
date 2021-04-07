@@ -24,11 +24,6 @@
         </activity>
 
         <activity
-            android:name=".activities.AddRemiderScreen"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-
-        <activity
             android:name=".activities.AddNoteScreen"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

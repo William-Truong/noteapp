@@ -178,7 +178,7 @@ public class AddNoteScreen extends AppCompatActivity {
 
             //Tạo note mới
             final Notes temp = new Notes();
-            temp.setTitle(edtTitle.getText().toString());
+            temp.setTitle(edtTitle.getText().toString().trim());
             temp.setDatetime(txtDateTime.getText().toString());
             temp.setSubtilte(edtSubtitle.getText().toString());
             temp.setContent(edtContent.getText().toString());

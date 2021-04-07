@@ -23,4 +23,6 @@
     <string name="delete_Note">Xóa ghi chép</string>
     <string name="isdelete">Bạn có chắn chắn muốn xóa nó chứ ?</string>
     <string name="delete">Xóa</string>
+    <string name="save">Save</string>
+    <string name="enter_here">Enter here....</string>
 </resources>

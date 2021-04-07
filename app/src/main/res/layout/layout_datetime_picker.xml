@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/backgroud_item_note"
+    android:padding="@dimen/_5sdp">
+
+    <CalendarView
+        android:id="@+id/pkDatepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_setTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_5sdp"
+        app:layout_constraintTop_toBottomOf="@id/pkDatepicker"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/imgSetTime"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_set_time"
+            android:padding="@dimen/_5sdp"
+            tools:ignore="MissingConstraints"
+            app:tint="@color/colorIcon" />
+
+
+        <TextView
+            android:id="@+id/txtSetTime"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imgSetTime"
+            android:paddingTop="@dimen/_5sdp"
+            android:text="Set Time"
+            android:textColor="@color/colorTextHint"
+            android:textSize="@dimen/_20ssp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/CancelDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout_setTime"
+        app:layout_constraintEnd_toStartOf="@id/SaveDateTime"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:text="@string/cancel"
+        android:textSize="@dimen/_20ssp"
+        android:textColor="@color/colorNoteColor2"
+        />
+
+    <TextView
+        android:id="@+id/SaveDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout_setTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/_20ssp"
+        android:text="@string/add"
+        android:textColor="@color/colorNoteColor2"
+        android:layout_marginRight="@dimen/_10sdp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
