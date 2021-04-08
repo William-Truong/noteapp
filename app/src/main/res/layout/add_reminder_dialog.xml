@@ -16,8 +16,10 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:hint="@string/enter_here"
         android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-
+        android:textColorHint="@color/colorTextHint"
+        android:padding="@dimen/_5sdp"
+        android:textSize="@dimen/_20ssp"
+        android:background="@null"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -25,11 +27,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@id/edtTilteR"
         android:layout_marginBottom="@dimen/_10sdp"
         android:hint="@string/enter_here"
-        android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
+        android:textColor="@color/colorTextHint"
+        android:textColorHint="@color/colorTextHint"
+        android:padding="@dimen/_5sdp"
+        android:textSize="@dimen/_15sdp"
+        android:background="@null"
         />
 
     <TextView
@@ -49,29 +55,34 @@
         android:id="@+id/imgShowDesctiptionEditext"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@id/txtDateTimeR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="@dimen/_15sdp"
         android:src="@drawable/ic_description"
-        android:layout_marginLeft="@dimen/_20sdp" />
+        android:layout_marginLeft="@dimen/_20sdp"
+        app:tint="@color/colorIcon" />
 
     <ImageView
         android:id="@+id/imgdatetimepicker"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:src="@drawable/ic_datetime"
+        android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintStart_toEndOf="@id/imgShowDesctiptionEditext"
         app:layout_constraintTop_toBottomOf="@id/txtDateTimeR"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_20sdp" />
+        android:layout_marginLeft="@dimen/_20sdp"
+        app:tint="@color/colorIcon"/>
 
     <TextView
         android:id="@+id/txtSaveR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"
+        android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/ubuntu_regular"
         android:textColor="@color/colorNoteColor2"
         android:textSize="@dimen/_24sdp"

@@ -24,6 +24,7 @@
         app:layout_constraintTop_toBottomOf="@id/pkDatepicker"
         tools:ignore="MissingConstraints">
 
+
         <ImageView
             android:id="@+id/imgSetTime"
             android:layout_width="@dimen/_35sdp"
@@ -32,7 +33,7 @@
             android:src="@drawable/ic_set_time"
             android:padding="@dimen/_5sdp"
             tools:ignore="MissingConstraints"
-            app:tint="@color/colorIcon" />
+            app:tint="@color/colorWhite" />
 
 
         <TextView
@@ -42,7 +43,7 @@
             app:layout_constraintStart_toEndOf="@id/imgSetTime"
             android:paddingTop="@dimen/_5sdp"
             android:text="Set Time"
-            android:textColor="@color/colorTextHint"
+            android:textColor="@color/colorWhite"
             android:textSize="@dimen/_20ssp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"
@@ -58,7 +59,7 @@
         android:layout_marginRight="@dimen/_15sdp"
         android:text="@string/cancel"
         android:textSize="@dimen/_20ssp"
-        android:textColor="@color/colorNoteColor2"
+        android:textColor="@color/colorTextHint"
         />
 
     <TextView
