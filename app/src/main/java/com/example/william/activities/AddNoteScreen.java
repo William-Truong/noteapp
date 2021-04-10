@@ -448,7 +448,7 @@ public class AddNoteScreen extends AppCompatActivity {
 
     //view and update
     private void viewandupdate(){
-        edtTitle.setText(noteSelected.getSubtilte());
+        edtTitle.setText(noteSelected.getTitle());
         edtSubtitle.setText(noteSelected.getSubtilte());
         edtContent.setText(noteSelected.getContent());
         txtDateTime.setText(noteSelected.getDatetime());

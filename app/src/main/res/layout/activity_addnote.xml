@@ -34,8 +34,8 @@
 
             <ImageView
                 android:id="@+id/imgDone"
-                android:layout_width="@dimen/_33sdp"
-                android:layout_height="@dimen/_33sdp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:src="@drawable/ic_save"
                 android:foregroundGravity="center"
                 app:layout_constraintBottom_toTopOf="@+id/edtTitle"
@@ -48,22 +48,22 @@
 
             <ImageView
                 android:id="@+id/imgClear"
-                android:layout_width="@dimen/_38sdp"
-                android:layout_height="@dimen/_39sdp"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:src="@drawable/ic_refresh"
                 app:tint="@color/colorIcon"
                 android:foregroundGravity="center"
                 app:layout_constraintEnd_toStartOf="@id/imgDone"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:layout_marginRight="@dimen/_12sdp" />
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp" />
 
             <EditText
                 android:id="@+id/edtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_23sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:background="@null"
                 android:capitalize="characters"
@@ -201,7 +201,7 @@
                 android:minHeight="@dimen/_100sdp"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorTextHint"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_15sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutweb" />
 
