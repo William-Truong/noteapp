@@ -1,8 +1,12 @@
 package com.example.william.adapter;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -12,9 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.william.R;
+import com.example.william.activities.AddNoteScreen;
+import com.example.william.database.NoteDatabase;
 import com.example.william.entities.Notes;
 import com.example.william.listener.NoteListener;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -83,12 +90,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         void setNote(Notes temp){
             txtTitle.setText(temp.getTitle());
-            if(temp.getSubtilte().trim().isEmpty()) //nếu subtitle rỗng thì ẩn view đó đi
+
+            //nếu subtitle rỗng thì ẩn view đó đi
+            if(temp.getSubtilte().trim().isEmpty())
                 txtSubtitle.setVisibility(View.GONE);//ẩn subtitle
             else
                 txtSubtitle.setText(temp.getSubtilte());
-
-            txtDatetime.setText(temp.getDatetime());
 
             //phần đổi màu note
             GradientDrawable gradientDrawable = (GradientDrawable) layoutNote.getBackground();
@@ -104,6 +111,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             }else
                 imageNote.setVisibility(View.GONE);
 
+            txtDatetime.setText(temp.getDatetime());
         }
     }
 
@@ -142,4 +150,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         if(timer != null)
             timer.cancel();
     }
+
+
 }

@@ -102,13 +102,7 @@ public class AddNoteScreen extends AppCompatActivity {
     }
 
     private void addEvents() {
-        //Nút back
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
 
         //Get Time
         txtDateTime.setText( new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm a", Locale.getDefault()).format(new Date()));
@@ -129,6 +123,15 @@ public class AddNoteScreen extends AppCompatActivity {
         imgSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveNote();
+            }
+        });
+
+        //Nút back
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(edtTitle.getText().toString().trim()!="")
                 saveNote();
             }
         });
@@ -468,7 +471,7 @@ public class AddNoteScreen extends AppCompatActivity {
     }
 
     //Delete Note
-    private void showdialogDelete(){
+    public void showdialogDelete(){
         if(dialogDeleteNote == null){
             //nơi dialog hiển thị
             AlertDialog.Builder b = new AlertDialog.Builder(AddNoteScreen.this);

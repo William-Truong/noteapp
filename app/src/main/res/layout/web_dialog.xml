@@ -49,6 +49,7 @@
         android:textColor="@color/colorWhite"
         android:fontFamily="@font/ubuntu_regular"
         android:hint="@string/enter_url"
+        android:text="https://"
         android:textColorHint="@color/colorTextHint"
         android:background="@null"
         android:gravity="center_vertical"
