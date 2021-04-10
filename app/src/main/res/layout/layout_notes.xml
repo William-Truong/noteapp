@@ -68,7 +68,8 @@
             android:clipToPadding="false"
             android:paddingEnd="@dimen/_12sdp"
             android:paddingRight="@dimen/_12sdp"
-            android:paddingBottom="@dimen/_12sdp" />
+            android:paddingBottom="@dimen/_12sdp"
+            />
     </LinearLayout>
 
     <ImageView
@@ -82,4 +83,6 @@
         android:padding="@dimen/_8sdp"
         android:src="@drawable/ic_edit_add"
         />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

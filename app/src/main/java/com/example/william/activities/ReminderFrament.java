@@ -20,23 +20,36 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.william.R;
+import com.example.william.adapter.ReminderAdapter;
+import com.example.william.entities.Reminders;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
 public class ReminderFrament extends Fragment {
     private ImageView btnAddReminder;
 
-    private static final int REQUESR_CODE_ADD = 1;
+    private Calendar c = Calendar.getInstance();
+    private String date,timee;
 
-    Calendar c = Calendar.getInstance();
-    String date;
+    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+    private RecyclerView lvData;
+    ReminderAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,6 +62,17 @@ public class ReminderFrament extends Fragment {
                 showAddReminderDialog(Gravity.BOTTOM);
             }
         });
+
+        lvData = v.findViewById(R.id.lvReminderData);
+        lvData.setLayoutManager(new LinearLayoutManager(getActivity()));
+        FirebaseRecyclerOptions<Reminders> options = new FirebaseRecyclerOptions.Builder<Reminders>()
+                .setQuery(db.child("Reminder"),Reminders.class).build();
+        adapter = new ReminderAdapter(options);
+
+        adapter.startListening();
+        lvData.setAdapter(adapter);
+
+        db.keepSynced(true);
         return v;
     }
 
@@ -74,8 +98,10 @@ public class ReminderFrament extends Fragment {
             dialog.setCancelable(false);
         EditText edtTitleR = dialog.findViewById(R.id.edtTilteR);
         EditText edtDescription = dialog.findViewById(R.id.edtDescriptionR);
+
         ImageView imgShowDescription = dialog.findViewById(R.id.imgShowDesctiptionEditext);
         ImageView imgDatetimePicker = dialog.findViewById(R.id.imgdatetimepicker);
+
         TextView txtDatetimeSaved = dialog.findViewById(R.id.txtDateTimeR);
         TextView txtSaveR = dialog.findViewById(R.id.txtSaveR);
 
@@ -93,8 +119,27 @@ public class ReminderFrament extends Fragment {
             @Override
             public void onClick(View v) {
                 showAddTime(Gravity.BOTTOM);
+                txtDatetimeSaved.setText(date);
+                txtDatetimeSaved.setVisibility(View.VISIBLE);
             }
         });
+
+        txtSaveR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(edtTitleR.getText().toString().trim().isEmpty())
+                    edtTitleR.setError("Title can not blank!");
+                else{
+                    Reminders temp = new Reminders();
+                    temp.setTitle(edtTitleR.getText().toString());
+                    temp.setDescription(edtDescription.getText().toString());
+                    temp.setDate(date);
+                    db.child("Reminder").push().setValue(temp);
+                    dialog.dismiss();
+                }
+            }
+        });
+
 
         dialog.show();
     }
@@ -128,7 +173,7 @@ public class ReminderFrament extends Fragment {
         pkDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                date = dayOfMonth+"/"+(month+1)+"/"+year;
+                date = dayOfMonth+"/"+(month+1);
             }
         });
 
@@ -140,8 +185,9 @@ public class ReminderFrament extends Fragment {
                 TimePickerDialog Timedialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String temp = hourOfDay+":"+minute;
-                        txtSetTime.setText(temp);
+                        timee = hourOfDay+":"+minute;
+
+                        txtSetTime.setText(timee);
                     }
                 },hour,minute,true);
                 Timedialog.show();
@@ -155,8 +201,25 @@ public class ReminderFrament extends Fragment {
             }
         });
 
+        txtSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 }
