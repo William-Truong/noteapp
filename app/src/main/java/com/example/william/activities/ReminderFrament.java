@@ -35,21 +35,24 @@ import com.example.william.entities.Reminders;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.Calendar;
 
 public class ReminderFrament extends Fragment {
-    private ImageView btnAddReminder;
 
-    private Calendar c = Calendar.getInstance();
-    private String date,timee;
+    private ImageView btnAddReminder;
 
     DatabaseReference db = FirebaseDatabase.getInstance().getReference();
     private RecyclerView lvData;
     ReminderAdapter adapter;
 
+    private Calendar c = Calendar.getInstance();
+    public String date,time;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -96,13 +99,12 @@ public class ReminderFrament extends Fragment {
             dialog.setCancelable(true);
         else
             dialog.setCancelable(false);
+
         EditText edtTitleR = dialog.findViewById(R.id.edtTilteR);
         EditText edtDescription = dialog.findViewById(R.id.edtDescriptionR);
 
         ImageView imgShowDescription = dialog.findViewById(R.id.imgShowDesctiptionEditext);
         ImageView imgDatetimePicker = dialog.findViewById(R.id.imgdatetimepicker);
-
-        TextView txtDatetimeSaved = dialog.findViewById(R.id.txtDateTimeR);
         TextView txtSaveR = dialog.findViewById(R.id.txtSaveR);
 
         imgShowDescription.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +120,72 @@ public class ReminderFrament extends Fragment {
         imgDatetimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAddTime(Gravity.BOTTOM);
-                txtDatetimeSaved.setText(date);
-                txtDatetimeSaved.setVisibility(View.VISIBLE);
+                final Dialog dialogb = new Dialog(getActivity());
+                dialogb.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialogb.setContentView(R.layout.layout_datetime_picker);
+
+                Window window = dialogb.getWindow();
+                if(window == null)
+                    return;
+
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams windowAttributes = window.getAttributes();
+                windowAttributes.gravity = Gravity.BOTTOM;
+                window.setAttributes(windowAttributes);
+
+                CalendarView pkDate = dialogb.findViewById(R.id.pkDatepicker);
+                ConstraintLayout layout = dialogb.findViewById(R.id.layout_setTime);
+                TextView txtSetTime = dialogb.findViewById(R.id.txtSetTime);
+                TextView txtCancel = dialogb.findViewById(R.id.CancelDateTime);
+                TextView txtSave = dialogb.findViewById(R.id.SaveDateTime);
+
+
+                pkDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                        date = dayOfMonth+"/"+(month+1);
+                    }
+                });
+
+                layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int hour = c.get(c.HOUR);
+                        int minute = c.get(c.MINUTE);
+
+                        TimePickerDialog Timedialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                time = hourOfDay + ":" + minute;
+                                txtSetTime.setText(time);
+                            }
+                        }, hour, minute, true);
+                        Timedialog.show();
+                    }
+                });
+
+                txtCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        date = null;
+                        time = null;
+                        dialogb.dismiss();
+                    }
+                });
+
+                txtSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogb.dismiss();
+                    }
+                });
+
+                dialogb.show();
+
             }
+
         });
 
         txtSaveR.setOnClickListener(new View.OnClickListener() {
@@ -134,82 +198,17 @@ public class ReminderFrament extends Fragment {
                     temp.setTitle(edtTitleR.getText().toString());
                     temp.setDescription(edtDescription.getText().toString());
                     temp.setDate(date);
+                    temp.setTime(time);
                     db.child("Reminder").push().setValue(temp);
                     dialog.dismiss();
                 }
             }
         });
 
-
         dialog.show();
     }
 
-    private void showAddTime(int gravity){
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.layout_datetime_picker);
-        Window window = dialog.getWindow();
-        if(window == null)
-            return;
 
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = gravity;
-        window.setAttributes(windowAttributes);
-
-        if(Gravity.BOTTOM == gravity)
-            dialog.setCancelable(true);
-        else
-            dialog.setCancelable(false);
-
-        CalendarView pkDate = dialog.findViewById(R.id.pkDatepicker);
-        ConstraintLayout layout = dialog.findViewById(R.id.layout_setTime);
-        TextView txtSetTime = dialog.findViewById(R.id.txtSetTime);
-        TextView txtCancel = dialog.findViewById(R.id.CancelDateTime);
-        TextView txtSave = dialog.findViewById(R.id.SaveDateTime);
-
-        pkDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                date = dayOfMonth+"/"+(month+1);
-            }
-        });
-
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int hour = c.get(c.HOUR);
-                int minute = c.get(c.MINUTE);
-                TimePickerDialog Timedialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        timee = hourOfDay+":"+minute;
-
-                        txtSetTime.setText(timee);
-                    }
-                },hour,minute,true);
-                Timedialog.show();
-            }
-        });
-
-        txtCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        txtSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
 
     @Override
     public void onStart() {

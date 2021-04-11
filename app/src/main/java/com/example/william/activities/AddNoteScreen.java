@@ -123,7 +123,11 @@ public class AddNoteScreen extends AppCompatActivity {
         imgSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveNote();
+                //nếu Tiêu đề tỗng
+                if(edtTitle.getText().toString().trim().isEmpty())
+                    edtTitle.setError("Title can't not Empty!");
+                else//nếu ko rỗng
+                    saveNote();
             }
         });
 
@@ -131,8 +135,10 @@ public class AddNoteScreen extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edtTitle.getText().toString().trim()!="")
-                saveNote();
+                if(edtTitle.getText().toString().isEmpty())
+                    onBackPressed();
+                else
+                    saveNote();
             }
         });
 
@@ -148,8 +154,6 @@ public class AddNoteScreen extends AppCompatActivity {
 
         toolbar();
         setSubtitleColor();
-
-
 
         //delete Photo and url
         findViewById(R.id.imgDeleteURL).setOnClickListener(new View.OnClickListener() {
@@ -174,47 +178,38 @@ public class AddNoteScreen extends AppCompatActivity {
     }
 
     private void saveNote() {
-        //nếu Tiêu đề tỗng
-        if(edtTitle.getText().toString().trim().isEmpty()){
-            edtTitle.setError("Title can't not Empty!");
-        }else{//nếu ko rỗng
+        //Tạo note mới
+        final Notes temp = new Notes();
+        temp.setTitle(edtTitle.getText().toString().trim());
+        temp.setDatetime(txtDateTime.getText().toString());
+        temp.setSubtilte(edtSubtitle.getText().toString());
+        temp.setContent(edtContent.getText().toString());
+        temp.setColorr(noteColor);
+        temp.setImgphoto(imagePath);
 
-            //Tạo note mới
-            final Notes temp = new Notes();
-            temp.setTitle(edtTitle.getText().toString().trim());
-            temp.setDatetime(txtDateTime.getText().toString());
-            temp.setSubtilte(edtSubtitle.getText().toString());
-            temp.setContent(edtContent.getText().toString());
-            temp.setColorr(noteColor);
-            temp.setImgphoto(imagePath);
+        if(layoutURL.getVisibility() == View.VISIBLE)
+            temp.setWeblinkk(txtURL.getText().toString());
+        if(noteSelected != null)
+            temp.setId(noteSelected.getId());
 
-            if(layoutURL.getVisibility() == View.VISIBLE)
-                temp.setWeblinkk(txtURL.getText().toString());
-
-            if(noteSelected != null)
-                temp.setId(noteSelected.getId());
-
-            //lưu vào DATABASE
-            @SuppressLint("StaticFieldLeak")
-            class SaveNoteTask extends AsyncTask<Void,Void,Void>{
-
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    NoteDatabase.getDatabase(getApplicationContext()).noteDB().addNote(temp);
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) { //trở về màn hình list note
-                    super.onPostExecute(aVoid);
-                    Intent i = new Intent();
-                    setResult(RESULT_OK,i);
-                    finish();
-                }
+        //lưu vào DATABASE
+        @SuppressLint("StaticFieldLeak")
+        class SaveNoteTask extends AsyncTask<Void,Void,Void>{
+            @Override
+            protected Void doInBackground(Void... voids) {
+                NoteDatabase.getDatabase(getApplicationContext()).noteDB().addNote(temp);
+                return null;
             }
 
-            new SaveNoteTask().execute();
+            @Override
+            protected void onPostExecute(Void aVoid) { //trở về màn hình list note
+                super.onPostExecute(aVoid);
+                Intent i = new Intent();
+                setResult(RESULT_OK,i);
+                finish();
+            }
         }
+        new SaveNoteTask().execute();
     }
 
     private void setSubtitleColor() {

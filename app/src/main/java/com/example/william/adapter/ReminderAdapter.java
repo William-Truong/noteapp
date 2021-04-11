@@ -30,11 +30,10 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
     @Override
     protected void onBindViewHolder(@NonNull final ReminderViewHolder holder, int position, @NonNull Reminders model) {
         holder.txtTitle.setText(model.getTitle());
-        if(model.getDescription() != null){
+        if(model.getDescription() != null && model.getDescription() != ""){
             holder.txtDesc.setText(model.getDescription());
             holder.txtDesc.setVisibility(View.VISIBLE);
         }
-
 
         if(holder.ckFinish.isChecked()){
             holder.ckFinish.setChecked(false);
@@ -48,7 +47,19 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
             });
         }
 
-        holder.txtTime.setText(model.getDate());
+        if(model.getTime() != null || model.getDate() != null){
+            String tempDATETIME;
+            if(model.getTime() == null)
+                tempDATETIME = model.getDate();
+            else if (model.getDate() == null)
+                tempDATETIME = model.getTime();
+            else
+                tempDATETIME = model.getTime() + " on " + model.getDate();
+            holder.txtTime.setText(tempDATETIME.trim());
+            holder.txtTime.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     @NonNull
