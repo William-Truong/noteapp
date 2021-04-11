@@ -23,6 +23,7 @@ import com.example.william.R;
 import com.example.william.adapter.NoteAdapter;
 import com.example.william.database.NoteDatabase;
 import com.example.william.entities.Notes;
+import com.example.william.entities.Reminders;
 import com.example.william.listener.NoteListener;
 
 import java.io.Serializable;
@@ -146,4 +147,5 @@ public class NoteFrament extends Fragment implements NoteListener {
         i.putExtra("data",temp);
         startActivityForResult(i,REQUESR_CODE_UPDATE);
     }
+
 }

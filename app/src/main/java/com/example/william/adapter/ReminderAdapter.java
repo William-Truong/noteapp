@@ -15,11 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.william.R;
 import com.example.william.entities.Reminders;
+import com.example.william.listener.NoteListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.List;
 
 public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderAdapter.ReminderViewHolder> {
 
@@ -28,21 +32,36 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final ReminderViewHolder holder, int position, @NonNull Reminders model) {
+    protected void onBindViewHolder(@NonNull final ReminderViewHolder holder, final int position, @NonNull final Reminders model) {
         holder.txtTitle.setText(model.getTitle());
         if(model.getDescription() != null && model.getDescription() != ""){
             holder.txtDesc.setText(model.getDescription());
             holder.txtDesc.setVisibility(View.VISIBLE);
         }
-
         if(holder.ckFinish.isChecked()){
             holder.ckFinish.setChecked(false);
         }else{
             holder.ckFinish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-                    db.child("Reminder").child(getRef(position).getKey()).removeValue();
+                    try {
+                        FirebaseDatabase.getInstance().getReference().child("Reminder").
+                                child(getRef(position).getKey()).removeValue()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(v.getContext(),"Done!",Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(v.getContext(),"Error!",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }catch (Exception e){
+                        Toast.makeText(v.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
         }
@@ -59,6 +78,12 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
             holder.txtTime.setVisibility(View.VISIBLE);
         }
 
+        holder.layout_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),getRef(position).getKey(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
