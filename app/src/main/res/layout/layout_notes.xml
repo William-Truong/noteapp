@@ -8,18 +8,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/txtMyNote"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:fontFamily="@font/ubuntu_bold"
-            android:includeFontPadding="false"
-            android:text="@string/my_notes"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_25sdp"
-            android:layout_marginLeft="@dimen/_16sdp" />
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingTop="@dimen/_15sdp">
+            <TextView
+                android:id="@+id/txtMyNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_bold"
+                android:includeFontPadding="false"
+                android:text="@string/my_notes"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_25sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgSetLayoutNote"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_stack"
+                app:tint="@color/colorIcon"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <LinearLayout
             android:id="@+id/layoutSearchNote"
             android:layout_width="match_parent"
@@ -66,22 +86,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingEnd="@dimen/_12sdp"
-            android:paddingRight="@dimen/_12sdp"
-            android:paddingBottom="@dimen/_12sdp"
-            />
+            android:padding="@dimen/_7sdp" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/btnAddNote"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_gravity="right|bottom"
-        android:layout_marginRight="@dimen/_30sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:background="@drawable/background_add_note"
-        android:padding="@dimen/_8sdp"
-        android:src="@drawable/ic_edit_add"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:src="@drawable/ic_add"
+        app:tint="@color/colorNoteColor2"
+        android:padding="@dimen/_10sdp"
+        android:background="@drawable/backgroud_add_button"
         />
 
 

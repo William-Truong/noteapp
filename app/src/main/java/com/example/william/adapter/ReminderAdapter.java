@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -32,10 +36,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderAdapter.ReminderViewHolder> {
     String date,time;
     Calendar c = Calendar.getInstance();
+    private Timer timer;
+
     public ReminderAdapter(@NonNull FirebaseRecyclerOptions<Reminders> options) {
         super(options);
     }
@@ -56,18 +64,16 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
                 @Override
                 public void onClick(View v) {
                     try {
-                        FirebaseDatabase.getInstance().getReference().child("Reminder").
-                                child(getRef(position).getKey()).removeValue()
+                        FirebaseDatabase.getInstance().getReference().child("Reminder").child(getRef(position).getKey()).removeValue()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(v.getContext(),"Done!",Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(v.getContext(),"Done!",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                     }catch (Exception e){
                         Toast.makeText(v.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
                     }
-
                 }
             });
         }
@@ -286,7 +292,7 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
     class ReminderViewHolder extends RecyclerView.ViewHolder {
         CheckBox ckFinish;
         TextView txtTitle,txtDesc,txtTime;
-        ConstraintLayout layout_item;
+        LinearLayout layout_item;
         public ReminderViewHolder(@NonNull View itemView) {
             super(itemView);
             ckFinish = itemView.findViewById(R.id.ckFinish);

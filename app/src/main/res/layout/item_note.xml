@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginLeft="@dimen/_10sdp"
-    android:layout_marginTop="@dimen/_12sdp"
+    android:layout_margin="@dimen/_5sdp"
     android:background="@drawable/backgroud_item_note">
 
     <com.makeramen.roundedimageview.RoundedImageView
