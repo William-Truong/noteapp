@@ -4,8 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/backgroud_item_note"
+    android:background="@drawable/backgroud_date_time_picker"
     android:padding="@dimen/_5sdp"
+    android:paddingTop="@dimen/_10sdp"
     android:layout_gravity="center"
     android:layout_marginBottom="@dimen/_30sdp">
 
@@ -13,7 +14,7 @@
         android:id="@+id/pkDatepicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +38,7 @@
             android:src="@drawable/ic_set_time"
             android:padding="@dimen/_5sdp"
             tools:ignore="MissingConstraints"
-            app:tint="@color/colorIcon" />
+            app:tint="@color/colorPrimary" />
 
 
         <TextView
@@ -47,7 +48,7 @@
             app:layout_constraintStart_toEndOf="@id/imgSetTime"
             android:paddingTop="@dimen/_5sdp"
             android:text="Set Time"
-            android:textColor="@color/colorIcon"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/_20ssp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"
@@ -66,7 +67,7 @@
         android:layout_marginRight="@dimen/_15sdp"
         android:text="@string/cancel"
         android:textSize="@dimen/_20ssp"
-        android:textColor="@color/colorIcon"
+        android:textColor="@color/colorPrimary"
         />
 
     <TextView
@@ -80,7 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:textSize="@dimen/_20ssp"
         android:text="@string/add"
-        android:textColor="@color/colorIcon"
+        android:textColor="@color/colorPrimary"
         android:layout_marginRight="@dimen/_20sdp"
         />
 

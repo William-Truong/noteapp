@@ -16,7 +16,7 @@
     <string name="add_URL">Add URL</string>
     <string name="deleteNote">Delete</string>
     <string name="enter_url">Enter Url</string>
-    <string name="add">ADD</string>
+    <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="my_reminder">My Reminder</string>
     <string name="delete_Note">Delete Note</string>
@@ -24,5 +24,7 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="enter_here">Enter here....</string>
-    <string name="todo">TODO</string>
+    <string name="add_description">Add descriptions</string>
+    <string name="set_date_time">Set date time</string>
+    <string name="mark_completed">Mark completed</string>
 </resources>

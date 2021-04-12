@@ -25,4 +25,7 @@
     <string name="delete">Xóa</string>
     <string name="save">Lưu</string>
     <string name="enter_here">Nhập ở đây...</string>
+    <string name="add_description">Thêm chú thích</string>
+    <string name="set_date_time">Set date time</string>
+    <string name="mark_completed">Mark completed</string>
 </resources>

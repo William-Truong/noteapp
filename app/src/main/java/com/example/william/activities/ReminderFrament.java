@@ -1,15 +1,11 @@
 package com.example.william.activities;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.Layout;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +13,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,27 +27,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.william.R;
 import com.example.william.adapter.ReminderAdapter;
-import com.example.william.entities.Notes;
 import com.example.william.entities.Reminders;
-import com.example.william.listener.NoteListener;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Timer;
 
-public class ReminderFrament extends Fragment {
+public class ReminderFrament extends Fragment{
 
     private ImageView btnAddReminder;
 
@@ -91,10 +72,7 @@ public class ReminderFrament extends Fragment {
         return v;
     }
 
-    private void showAddReminderDialog(int gravity) {
-        date = null;
-        time = null;
-
+    public void showAddReminderDialog(int gravity) {
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.add_reminder_dialog);
@@ -218,6 +196,8 @@ public class ReminderFrament extends Fragment {
                     temp.setDate(date);
                     temp.setTime(time);
                     db.child("Reminder").push().setValue(temp);
+                    date = null;
+                    time = null;
                     dialog.dismiss();
                 }
             }

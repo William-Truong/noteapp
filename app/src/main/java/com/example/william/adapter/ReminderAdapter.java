@@ -1,12 +1,21 @@
 package com.example.william.adapter;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.CalendarView;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,25 +24,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.william.R;
 import com.example.william.entities.Reminders;
-import com.example.william.listener.NoteListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
+
+import java.util.Calendar;
 
 public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderAdapter.ReminderViewHolder> {
-
+    String date,time;
+    Calendar c = Calendar.getInstance();
     public ReminderAdapter(@NonNull FirebaseRecyclerOptions<Reminders> options) {
         super(options);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull final ReminderViewHolder holder, final int position, @NonNull final Reminders model) {
+
         holder.txtTitle.setText(model.getTitle());
+
         if(model.getDescription() != null && model.getDescription() != ""){
             holder.txtDesc.setText(model.getDescription());
             holder.txtDesc.setVisibility(View.VISIBLE);
@@ -51,11 +62,6 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(v.getContext(),"Done!",Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(v.getContext(),"Error!",Toast.LENGTH_SHORT).show();
                             }
                         });
                     }catch (Exception e){
@@ -81,11 +87,194 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
         holder.layout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),getRef(position).getKey(),Toast.LENGTH_SHORT).show();
+
+                final Dialog dialog = new Dialog(v.getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.activity_edit_reminder);
+
+                Window window = dialog.getWindow();
+                if(window == null)
+                    return;
+
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams windowAttributes = window.getAttributes();
+
+                windowAttributes.gravity = Gravity.BOTTOM;
+                window.setAttributes(windowAttributes);
+                dialog.setCancelable(true);
+
+                ImageView imgBackEditReminder = dialog.findViewById(R.id.imgBackEditReminder);
+                ImageView imgSaveEditReminder = dialog.findViewById(R.id.imgSaveEditReminder);
+                EditText edtEditTitleReminder = dialog.findViewById(R.id.edtTitleEditReminder);
+                EditText edtEditDescriptionReminder = dialog.findViewById(R.id.edtDescriptionEditReminder);
+                ConstraintLayout layoutShowDescReminder = dialog.findViewById(R.id.layout_addDescriptionReminder);
+                ConstraintLayout layoutSetDateTime = dialog.findViewById(R.id.layout_editDateTimeReminder);
+                TextView txtDateTimeReminderChanged = dialog.findViewById(R.id.txtDateTimeEditReminder);
+                TextView txtMarkDone = dialog.findViewById(R.id.txtMarkDone);
+
+                edtEditTitleReminder.setText(model.getTitle());
+                if(model.getDescription() != ""){
+                    edtEditDescriptionReminder.setText(model.getDescription());
+                    edtEditDescriptionReminder.setVisibility(View.VISIBLE);
+                }
+
+                layoutShowDescReminder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(edtEditDescriptionReminder.getVisibility() == View.GONE)
+                            edtEditDescriptionReminder.setVisibility(View.VISIBLE);
+                        else if(edtEditDescriptionReminder.getVisibility() == View.VISIBLE){
+                            edtEditDescriptionReminder.setVisibility(View.GONE);
+                            edtEditDescriptionReminder.setText(null);
+                        }
+                    }
+                });
+
+                if(model.getTime() != null || model.getDate() != null){
+                    String tempDateTime2;
+                    if(model.getTime() == null)
+                        tempDateTime2 = model.getDate();
+                    else if(model.getDate() == null)
+                        tempDateTime2 = model.getTime();
+                    else
+                        tempDateTime2 = model.getTime() + " on " + model.getDate();
+                    txtDateTimeReminderChanged.setText(tempDateTime2.trim());
+                    txtDateTimeReminderChanged.setVisibility(View.VISIBLE);
+                }
+
+                dialog.show();
+
+                imgBackEditReminder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        imgSaveEditReminder.performClick();
+                    }
+                });
+
+                txtMarkDone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            FirebaseDatabase.getInstance().getReference().child("Reminder").
+                                    child(getRef(position).getKey()).removeValue();
+                        }catch (Exception e){
+                            Toast.makeText(v.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+
+                layoutSetDateTime.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Dialog dialogb = new Dialog(v.getContext());
+                        dialogb.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialogb.setContentView(R.layout.layout_datetime_picker);
+
+                        Window window = dialogb.getWindow();
+                        if(window == null)
+                            return;
+
+                        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+                        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+                        windowAttributes.gravity = Gravity.BOTTOM;
+                        window.setAttributes(windowAttributes);
+
+                        CalendarView pkDate = dialogb.findViewById(R.id.pkDatepicker);
+                        ConstraintLayout layout = dialogb.findViewById(R.id.layout_setTime);
+                        TextView txtSetTime = dialogb.findViewById(R.id.txtSetTime);
+                        TextView txtCancel = dialogb.findViewById(R.id.CancelDateTime);
+                        TextView txtSave = dialogb.findViewById(R.id.SaveDateTime);
+
+                        pkDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                            @Override
+                            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                                date = dayOfMonth+"/"+(month+1);
+                            }
+                        });
+
+                        layout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int hour = c.get(c.HOUR);
+                                int minute = c.get(c.MINUTE);
+
+                                TimePickerDialog Timedialog = new TimePickerDialog(v.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                        time = hourOfDay + ":" + minute;
+                                        txtSetTime.setText(time);
+                                    }
+                                }, hour, minute, true);
+                                Timedialog.show();
+                            }
+                        });
+
+                        txtCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                date = null;
+                                time = null;
+                                dialogb.dismiss();
+                            }
+                        });
+
+                        txtSave.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(time != null || date != null){
+                                    String temptimedate;
+                                    if(time == null)
+                                        temptimedate = date;
+                                    else if(date == null)
+                                        temptimedate = time;
+                                    else
+                                        temptimedate = time + " on " + date;
+                                    txtDateTimeReminderChanged.setText(temptimedate.trim());
+                                }
+                                dialogb.dismiss();
+                            }
+                        });
+
+                        dialogb.show();
+                    }
+                });
+
+                imgSaveEditReminder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Reminders tempObject = new Reminders();
+                        tempObject.setTitle(edtEditTitleReminder.getText().toString().trim());
+                        tempObject.setDescription(edtEditDescriptionReminder.getText().toString().trim());
+                        tempObject.setDate(date);
+                        tempObject.setTime(time);
+                        try {
+                            FirebaseDatabase.getInstance().getReference().child("Reminder")
+                                    .child(getRef(position).getKey()).setValue(tempObject).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    dialog.dismiss();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    dialog.dismiss();
+                                }
+                            });
+                        }catch (Exception e){
+                            Toast.makeText(v.getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
             }
         });
-
     }
+
+
 
     @NonNull
     @Override
@@ -106,5 +295,7 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
             txtTime = itemView.findViewById(R.id.datetime_reminder);
             layout_item = itemView.findViewById(R.id.layout_item_reminder);
         }
+
     }
+
 }
