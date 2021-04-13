@@ -1,18 +1,27 @@
 package com.example.william.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +62,7 @@ public class NoteFrament extends Fragment implements NoteListener {
 
     //refresh note
     SwipeRefreshLayout refreshLayoutNote;
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,23 +80,30 @@ public class NoteFrament extends Fragment implements NoteListener {
         imgSetLayoutNote = v.findViewById(R.id.imgSetLayoutNote);
         NoteRecyclerView = v.findViewById(R.id.lvNoteData);
 
-        //changed layout note start
-        imgSetLayoutNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //change layout
+        imgSetLayoutNote.setOnTouchListener(new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(getActivity(),new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    NoteRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+                    imgSetLayoutNote.setImageResource(ic_stack);
+                    return super.onDoubleTap(e);
+                }
+
+                @Override
+                public boolean onSingleTapConfirmed(MotionEvent e) {
                     NoteRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
                     imgSetLayoutNote.setImageResource(R.drawable.ic_gird);
-
-            }
-        });
-        imgSetLayoutNote.setOnLongClickListener(new View.OnLongClickListener() {
+                    return super.onSingleTapConfirmed(e);
+                }
+            });
             @Override
-            public boolean onLongClick(View v) {
-                NoteRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-                imgSetLayoutNote.setImageResource(ic_stack);
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
                 return true;
             }
         });
+
         NoteRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         //change LayoutNote end
 
@@ -95,7 +112,6 @@ public class NoteFrament extends Fragment implements NoteListener {
         NoteRecyclerView.setAdapter(noteAdapter);
 
         getNote(REQUESR_CODE_SHOW,false);
-
 
         //search note
         edtSearch = v.findViewById(R.id.edtSearch);
@@ -182,6 +198,59 @@ public class NoteFrament extends Fragment implements NoteListener {
         i.putExtra("isViewUpdate",true);
         i.putExtra("data",temp);
         startActivityForResult(i,REQUESR_CODE_UPDATE);
+    }
+
+    @Override
+    public void onNoteLongClicked(Notes tempDelete, int position) {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.delete_note);
+        Window window = dialog.getWindow();
+        if(window == null)
+            return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+        dialog.setCancelable(true);
+        TextView txtCancel = dialog.findViewById(R.id.txtDCancel);
+        TextView txtYes = dialog.findViewById(R.id.txtyes);
+
+        dialog.show();
+
+        txtCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        txtYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                @SuppressLint("StaticFieldLeak")
+                class DeleteNoteTask extends AsyncTask<Void, Void, Void>{
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        //truy vấn database và xóa note đang mở
+                        NoteDatabase.getDatabase(getActivity()).noteDB().deleteNote(tempDelete);
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        super.onPostExecute(aVoid);
+                        notesList.remove(position);
+                        noteAdapter.notifyItemRemoved(position);
+                        dialog.dismiss();
+                    }
+                }
+                //khởi chạy task
+                new DeleteNoteTask().execute();
+            }
+        });
     }
 
 }

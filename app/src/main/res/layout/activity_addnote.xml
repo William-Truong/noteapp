@@ -107,6 +107,7 @@
                 android:background="@null"
                 android:fontFamily="@font/ubuntu_medium"
                 android:hint="@string/Subtitle"
+                android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:includeFontPadding="false"
                 android:inputType="textMultiLine|textCapSentences"
@@ -192,6 +193,7 @@
                 android:fontFamily="@font/ubuntu_regular"
                 android:gravity="top"
                 android:hint="@string/content"
+                android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:includeFontPadding="false"
                 android:inputType="textMultiLine|textCapSentences"
@@ -204,6 +206,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
     <include layout="@layout/layout_toolbar" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

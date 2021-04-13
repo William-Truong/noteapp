@@ -20,7 +20,8 @@
         android:textSize="@dimen/_18ssp"
         android:background="@null"
         android:inputType="textCapSentences"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:imeOptions="actionDone"/>
 
     <EditText
         android:id="@+id/edtDescriptionR"
@@ -37,6 +38,7 @@
         android:textSize="@dimen/_15sdp"
         android:background="@null"
         android:inputType="textCapSentences|textMultiLine"
+        android:imeOptions="actionDone"
         />
 
     <TextView
@@ -63,7 +65,8 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:src="@drawable/ic_description"
         android:layout_marginLeft="@dimen/_20sdp"
-        app:tint="@color/colorIcon" />
+        app:tint="@color/colorIcon"
+        />
 
     <ImageView
         android:id="@+id/imgdatetimepicker"
@@ -91,7 +94,6 @@
         android:textColor="@color/colorIcon"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintTop_toBottomOf="@id/txtDateTimeR" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,8 @@
         android:id="@+id/layout_content_Edit_Reminder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp">
+        android:padding="@dimen/_10sdp"
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/imgBackEditReminder"
@@ -52,6 +53,7 @@
             android:inputType="textMultiLine"
             android:textSize="@dimen/_17ssp"
             android:background="@null"
+            android:imeOptions="actionDone"
             android:hint="@string/enter_here"
             android:textColorHint="@color/colorTextHint"
             android:textColor="@color/colorWhite"
@@ -73,6 +75,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@null"
             android:visibility="gone"
+            android:imeOptions="actionDone"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout

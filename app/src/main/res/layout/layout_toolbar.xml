@@ -19,7 +19,7 @@
         android:includeFontPadding="false"
         android:text="@string/Tools"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_13sdp" />
+        android:textSize="@dimen/_16sdp" />
 
     <LinearLayout
         android:id="@+id/LayoutNoteColor"
@@ -146,7 +146,7 @@
             android:includeFontPadding="false"
             android:text="@string/SelectColor"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_16sdp" />
     </LinearLayout>
 
 
@@ -204,8 +204,7 @@
             android:includeFontPadding="false"
             android:text="@string/add_URL"
             android:textColor="@color/colorNoteColor2"
-            android:textSize="@dimen/_12ssp"
-             />
+            android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
 
@@ -235,9 +234,6 @@
             android:includeFontPadding="false"
             android:text="@string/deleteNote"
             android:textColor="@color/colorNoteColor3"
-            android:textSize="@dimen/_12ssp"
-            />
-
+            android:textSize="@dimen/_12ssp" />
     </LinearLayout>
-
 </LinearLayout>

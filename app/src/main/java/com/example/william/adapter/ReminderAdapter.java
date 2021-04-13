@@ -75,7 +75,6 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
         holder.layout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final Dialog dialog = new Dialog(v.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.activity_edit_reminder);

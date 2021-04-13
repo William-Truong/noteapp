@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,9 +23,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -75,7 +79,6 @@ public class AddNoteScreen extends AppCompatActivity {
 
     //delete note
     private AlertDialog dialogDeleteNote;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,19 +97,14 @@ public class AddNoteScreen extends AppCompatActivity {
         edtSubtitle = findViewById(R.id.edtsubtitle);
         edtContent = findViewById(R.id.edtContent);
         vSubtitleColor = findViewById(R.id.subtilte_color);
-
         imgNote = findViewById(R.id.imageNote);
-
         layoutURL = findViewById(R.id.layoutweb);
         txtURL = findViewById(R.id.txtURL);
     }
 
     private void addEvents() {
-
-
         //Get Time
         txtDateTime.setText( new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm a", Locale.getDefault()).format(new Date()));
-
         //Nút Clear
         imgClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +116,6 @@ public class AddNoteScreen extends AppCompatActivity {
                 txtURL.setText(null);
             }
         });
-
         //Nút Lưu
         imgSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +127,6 @@ public class AddNoteScreen extends AppCompatActivity {
                     saveNote();
             }
         });
-
         //Nút back
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,8 +169,6 @@ public class AddNoteScreen extends AppCompatActivity {
                 imagePath = "";//xóa đường dẫn
             }
         });
-
-
     }
 
     private void saveNote() {

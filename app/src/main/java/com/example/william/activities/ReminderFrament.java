@@ -133,7 +133,6 @@ public class ReminderFrament extends Fragment{
                     edtDescription.setVisibility(View.GONE);
                     edtDescription.setText(null);
                 }
-
             }
         });
 
@@ -169,6 +168,11 @@ public class ReminderFrament extends Fragment{
                         date = dateFormat.format(cdate.getTime());
                     }
                 });
+
+                if(date == null){
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+                    date = dateFormat.format(cdate.getTime());
+                }
 
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override

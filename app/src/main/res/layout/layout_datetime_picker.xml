@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/backgroud_date_time_picker"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@id/pkDatepicker"
         tools:ignore="MissingConstraints">
 
@@ -46,10 +47,10 @@
             android:layout_width="@dimen/_150sdp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/imgSetTime"
-            android:paddingTop="@dimen/_5sdp"
+            android:paddingTop="@dimen/_6sdp"
             android:text="Set Time"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/_20ssp"
+            android:textSize="@dimen/_18ssp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             tools:ignore="MissingConstraints" />
@@ -66,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginRight="@dimen/_15sdp"
         android:text="@string/cancel"
-        android:textSize="@dimen/_20ssp"
+        android:textSize="@dimen/_17ssp"
         android:textColor="@color/colorPrimary"
         />
 
@@ -79,8 +80,8 @@
         app:layout_constraintTop_toBottomOf="@id/layout_setTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="@dimen/_20ssp"
-        android:text="@string/add"
+        android:textSize="@dimen/_17ssp"
+        android:text="@string/save"
         android:textColor="@color/colorPrimary"
         android:layout_marginRight="@dimen/_20sdp"
         />

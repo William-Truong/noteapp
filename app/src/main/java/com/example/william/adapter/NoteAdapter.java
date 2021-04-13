@@ -1,6 +1,7 @@
 package com.example.william.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,9 +10,12 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +28,7 @@ import com.example.william.activities.AddNoteScreen;
 import com.example.william.database.NoteDatabase;
 import com.example.william.entities.Notes;
 import com.example.william.listener.NoteListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -61,6 +66,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             @Override
             public void onClick(View v) {
                 noteListener.onNoteClicked(notesList.get(position),position);
+            }
+        });
+        holder.layoutNote.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                noteListener.onNoteLongClicked(notesList.get(position),position);
+                return true;
             }
         });
     }
@@ -150,6 +162,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         if(timer != null)
             timer.cancel();
     }
+
+
 
 
 }
