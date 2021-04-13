@@ -34,6 +34,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ReminderFrament extends Fragment{
@@ -44,7 +45,8 @@ public class ReminderFrament extends Fragment{
     private RecyclerView lvData;
     ReminderAdapter adapter;
 
-    private Calendar c = Calendar.getInstance();
+    private Calendar cdate = Calendar.getInstance();
+    private Calendar ctime = Calendar.getInstance();
     public String date,time;
     private SwipeRefreshLayout refreshLayout;
     @Nullable
@@ -159,24 +161,27 @@ public class ReminderFrament extends Fragment{
                 TextView txtCancel = dialogb.findViewById(R.id.CancelDateTime);
                 TextView txtSave = dialogb.findViewById(R.id.SaveDateTime);
 
-
                 pkDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                     @Override
                     public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                        date = dayOfMonth+"/"+(month+1);
+                        cdate.set(year,month,dayOfMonth);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+                        date = dateFormat.format(cdate.getTime());
                     }
                 });
 
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int hour = c.get(c.HOUR);
-                        int minute = c.get(c.MINUTE);
+                        int hour = ctime.get(ctime.HOUR);
+                        int minute = ctime.get(ctime.MINUTE);
 
                         TimePickerDialog Timedialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                time = hourOfDay + ":" + minute;
+                                ctime.set(0,0,0,hourOfDay,minute);
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                                time = dateFormat.format(ctime.getTime());
                                 txtSetTime.setText(time);
                             }
                         }, hour, minute, true);

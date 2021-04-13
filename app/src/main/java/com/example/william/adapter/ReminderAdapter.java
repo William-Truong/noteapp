@@ -35,14 +35,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderAdapter.ReminderViewHolder> {
     String date,time;
-    Calendar c = Calendar.getInstance();
-    private Timer timer;
+    private Calendar cdate = Calendar.getInstance();
+    private Calendar ctime = Calendar.getInstance();
 
     public ReminderAdapter(@NonNull FirebaseRecyclerOptions<Reminders> options) {
         super(options);
@@ -66,7 +67,7 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
             else if (model.getDate() == null)
                 tempDATETIME = model.getTime();
             else
-                tempDATETIME = model.getTime() + " on " + model.getDate();
+                tempDATETIME = model.getTime() + ", " + model.getDate();
             holder.txtTime.setText(tempDATETIME.trim());
             holder.txtTime.setVisibility(View.VISIBLE);
         }
@@ -130,7 +131,7 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
                     else if(model.getDate() == null)
                         tempDateTime2 = model.getTime();
                     else
-                        tempDateTime2 = model.getTime() + " on " + model.getDate();
+                        tempDateTime2 = model.getTime() + " , " + model.getDate();
                     txtDateTimeReminderChanged.setText(tempDateTime2.trim());
                     txtDateTimeReminderChanged.setVisibility(View.VISIBLE);
                 }
@@ -184,20 +185,24 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
                         pkDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                             @Override
                             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                                date = dayOfMonth+"/"+(month+1);
+                                cdate.set(year,month,dayOfMonth);
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+                                date = dateFormat.format(cdate.getTime());
                             }
                         });
 
                         layout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                int hour = c.get(c.HOUR);
-                                int minute = c.get(c.MINUTE);
+                                int hour = ctime.get(ctime.HOUR);
+                                int minute = ctime.get(ctime.MINUTE);
 
                                 TimePickerDialog Timedialog = new TimePickerDialog(v.getContext(), new TimePickerDialog.OnTimeSetListener() {
                                     @Override
                                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                        time = hourOfDay + ":" + minute;
+                                        ctime.set(0,0,0,hourOfDay,minute);
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                                        time = dateFormat.format(ctime.getTime());
                                         txtSetTime.setText(time);
                                     }
                                 }, hour, minute, true);
@@ -224,7 +229,7 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
                                     else if(date == null)
                                         temptimedate = time;
                                     else
-                                        temptimedate = time + " on " + date;
+                                        temptimedate = time + ", " + date;
                                     txtDateTimeReminderChanged.setText(temptimedate.trim());
                                 }
                                 dialogb.dismiss();

@@ -18,7 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottombar;
     private ViewPager viewPager;
-    private ImageView btnAddNote,btnAddReminder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private void addControls() {
         bottombar = findViewById(R.id.bottom_bar);
         viewPager =findViewById(R.id.screenpage);
-        btnAddNote = findViewById(R.id.btnAddNote);
-        btnAddReminder = findViewById(R.id.btnAddReminder);
     }
 
     private void addEvents() {
