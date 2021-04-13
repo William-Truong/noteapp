@@ -24,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.william.R;
 import com.example.william.adapter.ReminderAdapter;
@@ -44,7 +45,7 @@ public class ReminderFrament extends Fragment{
 
     private Calendar c = Calendar.getInstance();
     public String date,time;
-
+    private SwipeRefreshLayout refreshLayout;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,6 +68,14 @@ public class ReminderFrament extends Fragment{
         adapter.startListening();
         lvData.setAdapter(adapter);
 
+        refreshLayout = v.findViewById(R.id.swipeRefreshReminder);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.startListening();
+                refreshLayout.setRefreshing(false);
+            }
+        });
 
         db.keepSynced(true);
         return v;

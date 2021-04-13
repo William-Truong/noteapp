@@ -57,26 +57,26 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
             holder.txtDesc.setText(model.getDescription());
             holder.txtDesc.setVisibility(View.VISIBLE);
         }
-        if(holder.ckFinish.isChecked()){
-            holder.ckFinish.setChecked(false);
-        }else{
-            holder.ckFinish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        FirebaseDatabase.getInstance().getReference().child("Reminder").child(getRef(position).getKey()).removeValue()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(v.getContext(),"Done!",Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }catch (Exception e){
-                        Toast.makeText(v.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
+//        if(holder.ckFinish.isChecked()){
+//            holder.ckFinish.setChecked(false);
+//        }else{
+//            holder.ckFinish.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    try {
+//                        FirebaseDatabase.getInstance().getReference().child("Reminder").child(getRef(position).getKey()).removeValue()
+//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void aVoid) {
+//                                        Toast.makeText(v.getContext(),"Done!",Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//                    }catch (Exception e){
+//                        Toast.makeText(v.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+//        }
 
         if(model.getTime() != null || model.getDate() != null){
             String tempDATETIME;
@@ -290,12 +290,10 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
     }
 
     class ReminderViewHolder extends RecyclerView.ViewHolder {
-        CheckBox ckFinish;
         TextView txtTitle,txtDesc,txtTime;
         LinearLayout layout_item;
         public ReminderViewHolder(@NonNull View itemView) {
             super(itemView);
-            ckFinish = itemView.findViewById(R.id.ckFinish);
             txtTitle = itemView.findViewById(R.id.title_reminder);
             txtDesc = itemView.findViewById(R.id.desctiption_reminder);
             txtTime = itemView.findViewById(R.id.datetime_reminder);

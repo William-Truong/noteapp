@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.william.R;
 import com.example.william.adapter.NoteAdapter;
@@ -50,6 +51,8 @@ public class NoteFrament extends Fragment implements NoteListener {
     //search note
     EditText edtSearch;
 
+    //refresh note
+    SwipeRefreshLayout refreshLayoutNote;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -111,6 +114,16 @@ public class NoteFrament extends Fragment implements NoteListener {
             public void afterTextChanged(Editable s) {
                 if(notesList.size() != 0)
                     noteAdapter.searchNote(s.toString());
+            }
+        });
+
+        //refresh note
+        refreshLayoutNote = v.findViewById(R.id.swipeRefreshNote);
+        refreshLayoutNote.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                noteAdapter.notifyDataSetChanged();
+                refreshLayoutNote.setRefreshing(false);
             }
         });
 
