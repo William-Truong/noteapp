@@ -79,10 +79,10 @@
 
     <ImageView
         android:id="@+id/btnAddReminder"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
         android:layout_gravity="bottom|center"
-        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:src="@drawable/ic_add"
         app:tint="@color/colorNoteColor2"
         android:padding="@dimen/_10sdp"

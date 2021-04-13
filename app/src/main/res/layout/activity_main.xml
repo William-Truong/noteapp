@@ -23,12 +23,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_45sdp"
         android:background="@drawable/backgroid_bottombar"
-        app:menu="@menu/menu_bottom_nav"
         app:itemIconTint="@color/custom_nar_action_color"
         app:itemTextColor="@color/custom_nar_action_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:menu="@menu/menu_bottom_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

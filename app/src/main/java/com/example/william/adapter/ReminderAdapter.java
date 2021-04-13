@@ -37,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -149,7 +150,7 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
                     public void onClick(View v) {
                         try {
                             FirebaseDatabase.getInstance().getReference().child("Reminder").
-                                    child(getRef(position).getKey()).removeValue();
+                                    child(Objects.requireNonNull(getRef(position).getKey())).removeValue();
                         }catch (Exception e){
                             Toast.makeText(v.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
                         }
@@ -273,7 +274,7 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
     //Use to swipe to delete
     public void deleteItem(int position){
         FirebaseDatabase.getInstance().getReference().child("Reminder").
-                child(getRef(position).getKey()).removeValue();
+                child(Objects.requireNonNull(getRef(position).getKey())).removeValue();
     }
 
     @NonNull
