@@ -53,30 +53,11 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
 
         holder.txtTitle.setText(model.getTitle());
 
-        if(model.getDescription() != null && model.getDescription() != ""){
+        if(!model.getDescription().equalsIgnoreCase("")){
             holder.txtDesc.setText(model.getDescription());
             holder.txtDesc.setVisibility(View.VISIBLE);
         }
-//        if(holder.ckFinish.isChecked()){
-//            holder.ckFinish.setChecked(false);
-//        }else{
-//            holder.ckFinish.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    try {
-//                        FirebaseDatabase.getInstance().getReference().child("Reminder").child(getRef(position).getKey()).removeValue()
-//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void aVoid) {
-//                                        Toast.makeText(v.getContext(),"Done!",Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-//                    }catch (Exception e){
-//                        Toast.makeText(v.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
-//        }
+
 
         if(model.getTime() != null || model.getDate() != null){
             String tempDATETIME;
@@ -120,10 +101,15 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
                 TextView txtMarkDone = dialog.findViewById(R.id.txtMarkDone);
 
                 edtEditTitleReminder.setText(model.getTitle());
-                if(model.getDescription() != ""){
+                if(model.getDescription().equalsIgnoreCase("")){
+                    layoutShowDescReminder.setVisibility(View.VISIBLE);
+                }else{
                     edtEditDescriptionReminder.setText(model.getDescription());
                     edtEditDescriptionReminder.setVisibility(View.VISIBLE);
+                    layoutShowDescReminder.setVisibility(View.GONE);
+
                 }
+
 
                 layoutShowDescReminder.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -280,7 +266,11 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
         });
     }
 
-
+    //Use to swipe to delete
+    public void deleteItem(int position){
+        FirebaseDatabase.getInstance().getReference().child("Reminder").
+                child(getRef(position).getKey()).removeValue();
+    }
 
     @NonNull
     @Override
@@ -291,7 +281,7 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminders,ReminderA
 
     class ReminderViewHolder extends RecyclerView.ViewHolder {
         TextView txtTitle,txtDesc,txtTime;
-        LinearLayout layout_item;
+        ConstraintLayout layout_item;
         public ReminderViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.title_reminder);

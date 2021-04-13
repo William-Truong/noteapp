@@ -28,13 +28,13 @@
 
             <ImageView
                 android:id="@+id/imgSetLayoutNote"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_17sdp"
+                android:layout_height="@dimen/_17sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/ic_stack"
                 app:tint="@color/colorIcon"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

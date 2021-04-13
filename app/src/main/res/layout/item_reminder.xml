@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_item_reminder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_5sdp"
-    android:padding="@dimen/_10sdp"
-    android:orientation="vertical"
-    android:background="@drawable/backgroud_item_note"
-    android:backgroundTint="@color/colorSerchBackground">
+    android:background="@drawable/backgroud_item_reminder"
+    android:padding="@dimen/_10sdp">
 
     <TextView
         android:id="@+id/title_reminder"
@@ -18,18 +16,25 @@
         android:fontFamily="@font/roboto_bold"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_14ssp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="@dimen/_3sdp"
-        android:text="jhsdijf"/>
+        />
 
     <TextView
         android:id="@+id/desctiption_reminder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_3sdp"
         android:fontFamily="@font/roboto_regular"
         android:textColor="@color/colorIcon"
         android:textSize="@dimen/_12ssp"
-        android:layout_marginBottom="@dimen/_3sdp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/title_reminder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <TextView
         android:id="@+id/datetime_reminder"
@@ -39,6 +44,10 @@
         android:fontFamily="@font/roboto_medium"
         android:textColor="@color/colorTextHint"
         android:textSize="@dimen/_10ssp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/desctiption_reminder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
